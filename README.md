@@ -1,23 +1,23 @@
-# Clicksmob Offer Java SDK version 1.0.1
+### Clicksmob Offer Java SDK version 1.0.1
 
-##This Software Development Kit (SDK) enables you to pull the list of promoted offers from Clicksmob servers.  
+####This Software Development Kit (SDK) enables you to pull the list of promoted offers from Clicksmob servers.  
 
-##Prerequisites:
+####Prerequisites:
 This SDK requires the following 3-d party components/libraries to be in the classpath of your project:
-	**commons-lang3-3.1.jar**
-	**log4j-1.2.14.jar**
-	**slf4j-api-1.7.5.jar**
-	**jcl-over-slf4j-1.7.5.jar**
-	**slf4j-log4j12-1.7.5.jar**
-	**xstream-1.4.7.jar**
-	**xmlpull-1.1.3.1.jar**
-	**xpp3_min-1.1.4c.jar**
-	**httpclient-4.3.1.jar**
-	**commons-logging-1.1.3.jar**
-	**commons-codec-1.6.jar**
-	**httpcore-4.3.1.jar**
+*  **commons-lang3-3.1.jar**
+*  **log4j-1.2.14.jar**
+*  **slf4j-api-1.7.5.jar**
+*  **jcl-over-slf4j-1.7.5.jar**
+*  **slf4j-log4j12-1.7.5.jar**
+*  **xstream-1.4.7.jar**
+*  **xmlpull-1.1.3.1.jar**
+*  **xpp3_min-1.1.4c.jar**
+*  **httpclient-4.3.1.jar**
+*  **commons-logging-1.1.3.jar**
+*  **commons-codec-1.6.jar**
+*  **httpcore-4.3.1.jar**
 
-##For maven based projects, ensure that pom.xml includes the following dependencies.
+####For maven based projects, ensure that pom.xml includes the following dependencies.
         <dependencies>
                 <dependency>
                         <groupId>org.apache.commons</groupId>
@@ -66,6 +66,8 @@ This SDK requires the following 3-d party components/libraries to be in the clas
         </dependencies>
 
 ### Here is the simple example on how to use Clicksmob Offer Java SDK
+<pre>
+<code>
 		public class TestOfferApi
 		{
 
@@ -106,6 +108,9 @@ This SDK requires the following 3-d party components/libraries to be in the clas
 		      return offers;
 		   }
 		}
+		</code>
+		</pre>
 ### A full demo Eclipse project may be downloaded from this site
-#####[Clicksmob Java SDK Demo Project](https://github.com/clicksmob/clicksmob-offer-sdk/test-eclipse-project)
-#####[Javadoc documentation](https://github.com/clicksmob/clicksmob-offer-sdk/doc)
+#####[Clicksmob Java SDK Demo Project](https://github.com/clicksmob/clicksmob-offer-sdk/tree/master/test-eclipse-project)
+### Detailed Javadoc may be downloaded from this location
+#####[Javadoc documentation](https://github.com/clicksmob/clicksmob-offer-sdk/tree/master/doc)
