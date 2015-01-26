@@ -65,7 +65,7 @@ This SDK requires the following 3-d party components/libraries to be in the clas
                 </dependency>
         </dependencies>
 
-### Here is the simple example on how to use Clicksmob Offer Java SDK
+### Here is an example on how to use Clicksmob Offer Java SDK
 <pre>
 <code>
 		public class TestOfferApi
