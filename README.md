@@ -66,50 +66,99 @@ This SDK requires the following 3-d party components/libraries to be in the clas
         </dependencies>
 
 ### Here is an example on how to use Clicksmob Offer Java SDK
+#### For User/Password authenticaion
 <pre>
 <code>
-		public class TestOfferApi
-		{
+   private static Offers getAndInitOffersDefault( final String[] args ) throws ClientProtocolException, IOException,
+            ClicksmobException
+   {
+      final AuthenticationObjectUserPassword userPassword = new AuthenticationObjectUserPassword(           AuthenticationObjectUserPassword.URL_API_LOGIN_DEFAULT, args[ 0 ], args[ 1 ] );
+      final Offers offers = new Offers( Offers.URL_API_SECURED_DEFAULT );
+      offers.init( userPassword );
+      return offers;
+   }
 
-		   public static void main( String[] args ) throws ClientProtocolException, IOException, ClicksmobException
-		   {
-		      if( args.length != 2 )
-		      {
-			 throw new java.lang.ArrayIndexOutOfBoundsException( "\n\n\nInvoke with 2 arguments: email, password!!!\n\n\n" );
-		      }
-		      Offers offers = getAndInitOffersDefault( args );
-		      int i = 0;
-		      for( OfferPresentation offerPresentation : offers.getAllOffers() )
-		      {
-			 System.out.print( "#" + ++i + "\t");
-			 System.out.println( offerPresentation.name );
-		      }
-		      i = 0;
-		      for( OfferPresentation offerPresentation : offers.getOffersForPlatformsAndCountries(
-			       Arrays.asList( "iphone", "ipad" ), Arrays.asList( "tw", "hk" ) ) )
-		      {
-			 System.out.println();
-			 System.out.println( "#" + ++i + " offer " + offerPresentation.name );
-			 for( UserPayout userPayout : offerPresentation.userPayouts )
-			 {
-			    System.out.println( "\t" + userPayout.toString() );
-			 }
-			 
-		      }
-		   }
+   public static void main( final String[] args ) throws ClientProtocolException, IOException, ClicksmobException
+   {
+      if( args.length != 2 )
+      {
+         throw new java.lang.ArrayIndexOutOfBoundsException( "\n\n\nInvoke with 2 arguments: email, password!!!\n\n\n" );
+      }
+      final Offers offers = getAndInitOffersDefault( args );
+      int i = 0;
+      for( final OfferPresentation offerPresentation : offers.getAllOffers() )
+      {
+         System.out.print( "#" + ++i + "\t" );
+         System.out.println( offerPresentation.name );
+      }
+      i = 0;
+      for( final OfferPresentation offerPresentation : offers.getOffersForPlatformsAndCountries(
+               Arrays.asList( "iphone", "ipad" ), Arrays.asList( "tw", "hk" ) ) )
+      {
+         System.out.println();
+         System.out.println( "#" + ++i + " offer " + offerPresentation.name );
+         for( final UserPayout userPayout : offerPresentation.userPayouts )
+         {
+            System.out.println( "\t" + userPayout.toString() );
+         }
+         if( offerPresentation.offerCaps != null )
+         {
+            for( final OfferCapsPresentation capsPresentation : offerPresentation.offerCaps )
+            {
+               System.out.append( "\t\tOffer caps " ).println( capsPresentation.toString() );
+            }
+         }
+      }
+   }
 
-		   private static Offers getAndInitOffersDefault( String[] args ) throws ClientProtocolException, IOException,
-			    ClicksmobException
-		   {
-		      AuthenticationObjectUserPassword userPassword = new AuthenticationObjectUserPassword(
-			       AuthenticationObjectUserPassword.URL_API_LOGIN_DEFAULT, args[ 0 ], args[ 1 ] );
-		      Offers offers = new Offers( Offers.URL_API_DEFAULT );
-		      offers.init( userPassword );
-		      return offers;
-		   }
-		}
-		</code>
-		</pre>
+<code>
+</pre>
+#### For token based authentication
+<pre>
+<code>
+private static Offers getAndInitOffersDefault( final String[] args ) throws ClientProtocolException, IOException,
+            ClicksmobException
+   {
+      final AuthenticationObjectToken aoToken = new AuthenticationObjectToken( args[ 0 ], args[ 1 ] );
+      final Offers offers = new Offers( Offers.URL_API_TOKEN_AUTH_DEFAULT );
+      offers.init( aoToken );
+      return offers;
+   }
+
+   public static void main( final String[] args ) throws ClientProtocolException, IOException, ClicksmobException
+   {
+      if( args.length != 2 )
+      {
+         throw new java.lang.ArrayIndexOutOfBoundsException( "\n\n\nInvoke with 2 arguments: uid, token!!!\n\n\n" );
+      }
+      final Offers offers = getAndInitOffersDefault( args );
+      int i = 0;
+      for( final OfferPresentation offerPresentation : offers.getAllOffers() )
+      {
+         System.out.print( "#" + ++i + "\t" );
+         System.out.println( offerPresentation.name );
+      }
+      i = 0;
+      for( final OfferPresentation offerPresentation : offers.getOffersForPlatformsAndCountries(
+               Arrays.asList( "iphone", "ipad" ), Arrays.asList( "tw", "hk" ) ) )
+      {
+         System.out.println();
+         System.out.println( "#" + ++i + " offer " + offerPresentation.name );
+         for( final UserPayout userPayout : offerPresentation.userPayouts )
+         {
+            System.out.println( "\t" + userPayout.toString() );
+         }
+         if( offerPresentation.offerCaps != null )
+         {
+            for( final OfferCapsPresentation capsPresentation : offerPresentation.offerCaps )
+            {
+               System.out.append( "\t\tOffer caps " ).println( capsPresentation.toString() );
+            }
+         }
+      }
+   }
+</code>
+</pre>
 ### A full demo Eclipse project may be downloaded from this site
 #####[Clicksmob Java SDK Demo Project](https://github.com/clicksmob/clicksmob-offer-sdk/tree/master/test-eclipse-project)
 ### Detailed Javadoc may be downloaded from this location
