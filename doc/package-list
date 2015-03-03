@@ -1,5 +1,6 @@
 com.clicksmob.sdk
 com.clicksmob.sdk.auth
-com.clicksmob.sdk.entity
 com.clicksmob.sdk.error
+com.clicksmob.sdk.model
+com.clicksmob.sdk.test
 com.clicksmob.sdk.util
