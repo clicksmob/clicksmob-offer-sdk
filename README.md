@@ -100,48 +100,60 @@ This SDK requires the following 3-d party components/libraries to be in the clas
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 <code>
-   private static Offers getAndInitOffersDefault( final String[] args ) throws ClientProtocolException, IOException,
-            ClicksmobException
+   private static OfferSDK getAndInitOffersDefault( final String[] args ) throws ClientProtocolException, IOException,
+            ClicksmobException, JAXBException
    {
-      final AuthenticationObjectUserPassword userPassword = new AuthenticationObjectUserPassword(           AuthenticationObjectUserPassword.URL_API_LOGIN_DEFAULT, args[ 0 ], args[ 1 ] );
-      final Offers offers = new Offers( Offers.URL_API_SECURED_DEFAULT );
+      final AuthenticationObjectUserPassword userPassword = new AuthenticationObjectUserPassword(
+               AuthenticationObjectUserPassword.URL_API_LOGIN_DEFAULT, args[ 0 ], args[ 1 ] );
+      final OfferSDK offers = new OfferSDK( OfferSDK.URL_API_SECURED_DEFAULT );
       offers.init( userPassword );
       return offers;
    }
 
-   public static void main( final String[] args ) throws ClientProtocolException, IOException, ClicksmobException
+   public static void main( final String[] args ) throws ClientProtocolException, IOException, ClicksmobException,
+            JAXBException
    {
       if( args.length != 2 )
       {
          throw new java.lang.ArrayIndexOutOfBoundsException( "\n\n\nInvoke with 2 arguments: email, password!!!\n\n\n" );
       }
-      final Offers offers = getAndInitOffersDefault( args );
+      final OfferSDK offers = getAndInitOffersDefault( args );
       int i = 0;
-      for( final OfferPresentation offerPresentation : offers.getAllOffers() )
+      for( Offers.Offer offer : offers.getAllOffers().getOffer() )
       {
-         System.out.print( "#" + ++i + "\t" );
-         System.out.println( offerPresentation.name );
-      }
-      i = 0;
-      for( final OfferPresentation offerPresentation : offers.getOffersForPlatformsAndCountries(
-               Arrays.asList( "iphone", "ipad" ), Arrays.asList( "tw", "hk" ) ) )
-      {
-         System.out.println();
-         System.out.println( "#" + ++i + " offer " + offerPresentation.name );
-         for( final UserPayout userPayout : offerPresentation.userPayouts )
+         System.out.print( i++ );
+         System.out.print( ") " );
+         System.out.println( offer.getOfferName() );
+         for( CountryPlatformSet countryPlatformSet : offer.getOfferCaps().getCountryPlatformSet() )
          {
-            System.out.println( "\t" + userPayout.toString() );
-         }
-         if( offerPresentation.offerCaps != null )
-         {
-            for( final OfferCapsPresentation capsPresentation : offerPresentation.offerCaps )
+            System.out.println( "\t Daily offer restrictions: " + countryPlatformSet.getDailyCap() );
+            System.out.println( "\t\t Countries" );
+            for( CountryCode cc : countryPlatformSet.getCountries().getCountry() )
             {
-               System.out.append( "\t\tOffer caps " ).println( capsPresentation.toString() );
+               System.out.println( "\t\t\t  " + cc );
+            }
+            System.out.println( "\t\t Platforms" );
+            for( PlatformCode pc : countryPlatformSet.getPlatforms().getPlatform() )
+            {
+               System.out.println( "\t\t\t  " + pc );
+            }
+         }
+         for( OfferPayout offerPayout : offer.getOfferPayouts().getOfferPayout() )
+         {
+            System.out.println( "\t Offer payout: " + offerPayout.getPayout() );
+            System.out.println( "\t\t Countries" );
+            for( CountryCode cc : offerPayout.getCountries().getCountry() )
+            {
+               System.out.println( "\t\t\t  " + cc );
+            }
+            System.out.println( "\t\t Platforms" );
+            for( PlatformCode pc : offerPayout.getPlatforms().getPlatform() )
+            {
+               System.out.println( "\t\t\t  " + pc );
             }
          }
       }
    }
-
 <code>
 </pre>
 #### For token based authentication
@@ -178,44 +190,36 @@ This SDK requires the following 3-d party components/libraries to be in the clas
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 <code>
-private static Offers getAndInitOffersDefault( final String[] args ) throws ClientProtocolException, IOException,
-            ClicksmobException
+   private static OfferSDK getAndInitOffersDefault( final String[] args ) throws ClientProtocolException, IOException,
+            ClicksmobException, JAXBException
    {
       final AuthenticationObjectToken aoToken = new AuthenticationObjectToken( args[ 0 ], args[ 1 ] );
-      final Offers offers = new Offers( Offers.URL_API_TOKEN_AUTH_DEFAULT );
+      final OfferSDK offers = new OfferSDK( OfferSDK.URL_API_TOKEN_AUTH_DEFAULT );
       offers.init( aoToken );
       return offers;
    }
 
-   public static void main( final String[] args ) throws ClientProtocolException, IOException, ClicksmobException
+   public static void main( final String[] args ) throws ClientProtocolException, IOException, ClicksmobException,
+            JAXBException
    {
       if( args.length != 2 )
       {
          throw new java.lang.ArrayIndexOutOfBoundsException( "\n\n\nInvoke with 2 arguments: uid, token!!!\n\n\n" );
       }
-      final Offers offers = getAndInitOffersDefault( args );
+      final OfferSDK offers = getAndInitOffersDefault( args );
       int i = 0;
-      for( final OfferPresentation offerPresentation : offers.getAllOffers() )
+
+      for( Offers.Offer offer : offers.getAllOffers().getOffer() )
       {
-         System.out.print( "#" + ++i + "\t" );
-         System.out.println( offerPresentation.name );
-      }
-      i = 0;
-      for( final OfferPresentation offerPresentation : offers.getOffersForPlatformsAndCountries(
-               Arrays.asList( "iphone", "ipad" ), Arrays.asList( "tw", "hk" ) ) )
-      {
-         System.out.println();
-         System.out.println( "#" + ++i + " offer " + offerPresentation.name );
-         for( final UserPayout userPayout : offerPresentation.userPayouts )
+         System.out.print( i++ );
+         System.out.print( ") " );
+         System.out.println( offer.getOfferName() );
+         for( CountryPlatformSet countryPlatformSet : offer.getOfferCaps().getCountryPlatformSet() )
          {
-            System.out.println( "\t" + userPayout.toString() );
-         }
-         if( offerPresentation.offerCaps != null )
-         {
-            for( final OfferCapsPresentation capsPresentation : offerPresentation.offerCaps )
-            {
-               System.out.append( "\t\tOffer caps " ).println( capsPresentation.toString() );
-            }
+            System.out.print( "\t Countries" );
+            System.out.println( countryPlatformSet.getCountries() );
+            System.out.print( "\t Platforms" );
+            System.out.println( countryPlatformSet.getPlatforms() );
          }
       }
    }
