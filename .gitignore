@@ -1,0 +1,10 @@
+# Maven product directory.
+target/**
+
+# IntelliJ project files.
+*.iml
+*.ipr
+*.iws
+
+# Eclipse project files
+.classpath
