@@ -5,13 +5,13 @@ import com.clicksmob.sdk.model.Offers;
 import com.clicksmob.sdk.model.PlatformCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.misc.IOUtils;
 
 import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -105,7 +105,10 @@ public class Client {
             try (InputStream in = connection.getInputStream()) {
                 JAXBContext context = JAXBContext.newInstance(Offers.class);
                 Unmarshaller unmarshaller = context.createUnmarshaller();
-                Offers offers = (Offers) unmarshaller.unmarshal(in);
+
+                InputStreamReader reader = new InputStreamReader(in, "UTF-8");
+                Offers offers = (Offers) unmarshaller.unmarshal(reader);
+
                 logger.info("Fetched {} offers successfully from server.", offers.getOffer().size());
 
                 return offers;
